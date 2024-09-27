@@ -8,7 +8,6 @@ import {
   JoinColumn,
   ManyToOne,
   OneToOne,
-  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -25,14 +24,20 @@ export class Request extends BaseEntity {
 
   @OneToOne(() => Summary, { nullable: true })
   @JoinColumn({ referencedColumnName: 'id', name: 'summary_id' })
-  summary: Summary | null;
+  summary: Summary;
 
   @Column({ nullable: true })
   summaryId: string;
 
-  @OneToMany(() => Note, (note) => note.request, {
+  @OneToOne(() => Note, (note) => note.request, {
     cascade: ['soft-remove'],
     nullable: true,
   })
-  notes: Note[];
+  notes: Note;
+
+  @Column()
+  level: number;
+
+  @Column()
+  url: string;
 }
