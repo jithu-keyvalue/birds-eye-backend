@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateSummaryInput } from '../types/summary.types';
 import { Summary } from '../entities/summary.entity';
+import { executionAsyncId } from 'async_hooks';
 
 @Injectable()
 export class SummaryService {
@@ -11,7 +12,9 @@ export class SummaryService {
     private summaryRepository: Repository<Summary>,
   ) {}
 
-  create(summary: CreateSummaryInput): Promise<Summary> {
+  async create(summary: CreateSummaryInput): Promise<Summary> {
+    const existingSummary = await this.summaryRepository.findOneBy({requestId: summary.requestId})
+    summary.id = existingSummary?.id
     return this.summaryRepository.save({ ...summary });
   }
 

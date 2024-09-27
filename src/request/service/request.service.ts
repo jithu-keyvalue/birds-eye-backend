@@ -11,8 +11,10 @@ export class RequestService {
     private requestRepository: Repository<Request>,
   ) {}
 
-  create(request: CreateRequestInput): Promise<Request> {
-    return this.requestRepository.save({ ...request });
+  async create(createRequest: CreateRequestInput): Promise<Request> {
+    const existingRequest = await this.requestRepository.findOneBy([{url: createRequest.url,level:createRequest.level}])
+    const createdRequest = existingRequest ?? await this.requestRepository.save({...createRequest})
+    return createdRequest
   }
 
   findAll(userId: string): Promise<Request[]> {
