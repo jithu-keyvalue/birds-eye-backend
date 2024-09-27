@@ -1,0 +1,43 @@
+services:
+  postgres:
+    container_name: birds-eye-postgresDB
+    image: postgres:14.5-alpine
+    user: postgres
+    restart: always
+    env_file:
+      - docker.env
+    ports:
+      - '5432:5432'
+    volumes:
+      - birds-eye-postgres:/var/lib/postgresql/data
+    networks:
+      - birds-eye-network
+
+  pgadmin:
+    depends_on:
+      - postgres
+    links:
+      - postgres:postgres
+    container_name: birds-eye-pgadminTool
+    image: dpage/pgadmin4
+    ports:
+      - '9091:80'
+    volumes:
+      - pgadmindata:/root/.pgadmin
+      - pgadminlibdata:/var/lib/pgadmin
+    env_file:
+      - docker.env
+    networks:
+      - birds-eye-network
+
+volumes:
+  birds-eye-postgres:
+    driver: local
+  pgadmindata:
+    driver: local
+  pgadminlibdata:
+    driver: local
+
+networks:
+  birds-eye-network:
+    driver: bridge
