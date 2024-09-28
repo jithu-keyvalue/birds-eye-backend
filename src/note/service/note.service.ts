@@ -12,8 +12,10 @@ export class NoteService {
   ) {}
 
   async create(note: CreateNoteInput): Promise<Note> {
-    const existingNote = await this.noteRepository.findOneBy({requestId:note.requestId})
-    note.id = existingNote?.id
+    const existingNote = await this.noteRepository.findOneBy({
+      requestId: note.requestId,
+    });
+    note.id = existingNote?.id;
     return this.noteRepository.save({ ...note });
   }
 

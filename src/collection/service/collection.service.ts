@@ -22,7 +22,7 @@ export class CollectionService {
     return this.collectionRespository.findOneBy({ id });
   }
 
-  findAllByUserId(userId: string): Promise<Collection | null> {
-    return this.collectionRespository.findOneBy({ userId });
+  findAllByUserId(userId: string): Promise<Collection[] | null> {
+    return this.collectionRespository.findBy({ userId });
   }
 }

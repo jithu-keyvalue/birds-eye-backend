@@ -12,17 +12,23 @@ export class RequestService {
   ) {}
 
   async create(createRequest: CreateRequestInput): Promise<Request> {
-    const existingRequest = await this.requestRepository.findOneBy([{url: createRequest.url,level:createRequest.level}])
-    const createdRequest = existingRequest ?? await this.requestRepository.save({...createRequest})
-    return createdRequest
+    const existingRequest = await this.requestRepository.findOneBy([
+      { url: createRequest.url, level: createRequest.level },
+    ]);
+    const createdRequest =
+      existingRequest ??
+      (await this.requestRepository.save({ ...createRequest }));
+    return createdRequest;
   }
 
-  findAll(userId: string): Promise<Request[]> {
-    return this.requestRepository.find({ where: { userId } });
+  findAll(userId: string, collectionId: string): Promise<Request[]> {
+    return this.requestRepository.find({ where: { userId, collectionId } });
   }
 
   findOne(id: string, userId: string): Promise<Request | null> {
-    return this.requestRepository.findOne({ where: { id, userId } });
+    return this.requestRepository.findOne({
+      where: { id, userId },
+    });
   }
 
   async remove(id: string): Promise<void> {

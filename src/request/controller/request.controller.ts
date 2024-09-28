@@ -20,7 +20,10 @@ export class RequestController {
   }
 
   @Get()
-  async findAll(@Query('userId') userId: string) {
-    return this.requestService.findAll(userId);
+  async findAll(
+    @Query('userId') userId: string,
+    @Query('collectionId') collectionId: string,
+  ) {
+    return this.requestService.findAll(userId, collectionId);
   }
 }

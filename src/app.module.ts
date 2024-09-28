@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { RequestModule } from './request/request.module';
 import { SummaryModule } from './summary/summary.module';
 import { NoteModule } from './note/note.module';
+import { CollectionModule } from './collection/collection.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { NoteModule } from './note/note.module';
     RequestModule,
     SummaryModule,
     NoteModule,
+    CollectionModule,
   ],
   controllers: [AppController],
 })

@@ -1,8 +1,9 @@
 import { BaseEntity } from 'src/common/entities/BaseEntity';
 import { Request } from 'src/request/entity/request.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Column, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
+@Entity()
 export class Collection extends BaseEntity {
   @Column()
   name: string;
