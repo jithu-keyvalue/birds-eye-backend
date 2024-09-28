@@ -1,6 +1,6 @@
 import { BaseEntity } from 'src/common/entities/BaseEntity';
 import { Request } from 'src/request/entity/request.entity';
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, Collection, JoinColumn } from 'typeorm';
 
 @Entity()
 export class User extends BaseEntity {
@@ -14,4 +14,8 @@ export class User extends BaseEntity {
     cascade: ['soft-remove'],
   })
   requests: Request[];
+
+  // @OneToMany(() => Collection, (collection) => collection.user)
+  @JoinColumn({ referencedColumnName: 'id', name: 'user_id' })
+  collections: Collection[];
 }

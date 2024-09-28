@@ -1,14 +1,9 @@
+import { Collection } from 'src/collection/entity/collection.entity';
 import { BaseEntity } from 'src/common/entities/BaseEntity';
 import { Note } from 'src/note/entity/note.entity';
 import { Summary } from 'src/summary/entities/summary.entity';
 import { User } from 'src/user/entities/user.entity';
-import {
-  Entity,
-  Column,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-} from 'typeorm';
+import { Entity, Column, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 
 @Entity()
 export class Request extends BaseEntity {
@@ -40,4 +35,14 @@ export class Request extends BaseEntity {
 
   @Column()
   url: string;
+
+  @Column()
+  mode: string;
+
+  @ManyToOne(() => Collection, (collection) => collection.requests)
+  @JoinColumn({ referencedColumnName: 'id', name: 'collection_id' })
+  collection: Collection;
+
+  @Column()
+  collectionId: string;
 }
